@@ -1,0 +1,34 @@
+.groupInput {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 232px;
+
+  label {
+    font-family: "Plus Jakarta Sans";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    align-self: stretch;
+  }
+
+  input {
+    box-sizing: border-box;
+    border: 1px solid #e8decf;
+    border-radius: 12px;
+    padding: 15px;
+
+    font-family: "Plus Jakarta Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+
+.groupInput[data-full="true"] {
+  width: 100%;
+}

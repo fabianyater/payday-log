@@ -1,0 +1,13 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 480px;
+  width: 100%;
+
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+}

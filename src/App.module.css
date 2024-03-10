@@ -1,0 +1,18 @@
+.container {
+  max-width: 960px;
+  width: 100%;
+  text-align: left;
+  margin: 0 auto;
+
+  .header {
+    .title {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-optical-sizing: auto;
+      font-size: 32px;
+      letter-spacing: -0.8px;
+      line-height: 40px;
+      font-weight: bold;
+      font-style: normal;
+    }
+  }
+}

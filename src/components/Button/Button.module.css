@@ -1,0 +1,46 @@
+.button {
+  box-sizing: border-box;
+  max-width: 480px;
+  width: 100%;
+  border-radius: 24px;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #00996390;
+    transition: all 0.1s ease-in;
+  }
+}
+
+.button.sm {
+  padding: 0px 16px;
+  height: 40px;
+  width: max-content;
+  font-size: 14px;
+  text-align: center;
+
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0.21px;
+}
+
+.button.md {
+  padding: 0px 20px;
+  height: 48px;
+  font-size: 16px;
+
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.24px;
+  transition: all 0.1s ease-out;
+}
+
+.button[data-inactive="false"] {
+  color: #1c170d;
+}
