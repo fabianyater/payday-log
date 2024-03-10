@@ -12,7 +12,7 @@ function App() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Registro de ingresos</h1>
+        <h1 className={styles.title}>Registro de ingresossss</h1>
         <Text text="Total: " value={formatter.format(total)} />
         <Text text="Total días trabajados: " value={workedDays} />
       </header>
