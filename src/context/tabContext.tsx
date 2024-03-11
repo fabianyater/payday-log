@@ -20,7 +20,10 @@ type TabProviderProps = {
 
 export const TabProvider: React.FC<TabProviderProps> = ({ children }) => {
   const [activeTab, setActiveTab] = useState<string>("Ingresos");
-  const [total, setTotal] = useState<number>(0);
+  const [total, setTotal] = useState<number>(() => {
+    const savedTotal = localStorage.getItem("total");
+    return savedTotal ? JSON.parse(savedTotal) : 0;
+  });
   const [workedDays, setWorkedDays] = useState<string>("0");
   const [incomes, setIncomes] = useState<Movement[]>(() => {
     const savedIncomes = localStorage.getItem("ingresos");
@@ -33,9 +36,9 @@ export const TabProvider: React.FC<TabProviderProps> = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem("ingresos", JSON.stringify(incomes));
-    setTotal(incomes.reduce((total, income) => total + income.value, 0));
+    localStorage.setItem("total", total.toString())
     setWorkedDays(incomes.length.toString());
-  }, [incomes]);
+  }, [incomes, total]);
 
   useEffect(() => {
     localStorage.setItem("retiros", JSON.stringify(withdrawals));
@@ -49,6 +52,11 @@ export const TabProvider: React.FC<TabProviderProps> = ({ children }) => {
     }
   }, []);
 
+  useEffect(() => {
+    const getTotal = localStorage.getItem("total") || 0;
+    setTotal(Number(getTotal))
+  }, []);
+
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName);
     localStorage.setItem("activeTab", tabName);
@@ -57,28 +65,31 @@ export const TabProvider: React.FC<TabProviderProps> = ({ children }) => {
   const addMovement = (type: string, movement: Movement) => {
     const movements = getMovements(type);
     const updatedMovements = [...movements, movement];
+    setTotal(total + movement.value);
     localStorage.setItem(type, JSON.stringify(updatedMovements));
     setIncomes([...incomes, movement]);
   };
 
   const updateData = (type: string, data: Movement[]) => {
     if (type === "ingresos") {
+      setTotal(data.reduce((total, income) => total + income.value, 0));
       setIncomes(data);
     } else if (type === "retiros") {
+      setTotal(
+        total - data.reduce((total, withdraw) => total + withdraw.value, 0)
+      );
       setWithdrawals(data);
     }
   };
 
   const withdraw = () => {
     const movements = getMovements("retiros");
-    const withdrawValue = incomes.reduce(
-      (total, income) => total + income.value,
-      0
-    );
+    const withdrawValue = total;
     const newWithdraw: Movement = {
       date: new Date(),
       value: withdrawValue,
     };
+    setTotal(total - withdrawValue);
 
     const updatedMovements = [...movements, newWithdraw];
     localStorage.setItem("retiros", JSON.stringify(updatedMovements));
