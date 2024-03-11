@@ -1,3 +1,21 @@
 .uploadfileinput {
-  
+  background-color: #3a3a3a;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &:hover {
+    background-color: #4d4c4c;
+  }
 }

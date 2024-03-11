@@ -19,48 +19,61 @@
     padding-inline-start: 0;
     padding: 0;
 
-    .item {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      margin: 10px 0;
-
-      .icon {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        padding: 0px;
-
-        width: 48px;
-        height: 48px;
-
-        background: #f5f0e6;
-        border-radius: 8px;
+    .monthGroup {
+      .monthTitle {
+        text-transform: capitalize;
+        display: inline;
       }
 
-      .content {
-        display: flex;
-        flex-direction: column;
+      .monthList {
+        list-style: none;
+        padding-inline-start: 0;
+        padding: 0;
 
-        .dateText {
-          font-family: "Plus Jakarta Sans";
-          font-style: normal;
-          font-weight: 500;
-          font-size: 16px;
-          line-height: 24px;
+        .item {
+          display: flex;
+          gap: 16px;
+          align-items: center;
+          margin: 10px 0;
 
-          &::first-letter {
-            text-transform: capitalize;
+          .icon {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 0px;
+
+            width: 48px;
+            height: 48px;
+
+            background: #f5f0e6;
+            border-radius: 8px;
           }
-        }
 
-        .valueText {
-          font-family: "Plus Jakarta Sans";
-          font-style: normal;
-          font-weight: 400;
-          font-size: 14px;
-          line-height: 21px;
+          .content {
+            display: flex;
+            flex-direction: column;
+
+            .dateText {
+              font-family: "Plus Jakarta Sans";
+              font-style: normal;
+              font-weight: 500;
+              font-size: 16px;
+              line-height: 24px;
+
+              &::first-letter {
+                text-transform: capitalize;
+              }
+            }
+
+            .valueText {
+              font-family: "Plus Jakarta Sans";
+              font-style: normal;
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 21px;
+            }
+          }
         }
       }
     }

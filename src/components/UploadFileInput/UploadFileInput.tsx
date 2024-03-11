@@ -18,7 +18,7 @@ const UploadFileInput: React.FC<UploadFileInputProps> = ({ tab }) => {
 
   return (
     <div className={styles.uploadfileinput} title="Importar datos">
-      <div onClick={handleClick} style={{ cursor: "pointer" }}>
+      <div onClick={handleClick}>
         <ImportIcon />
       </div>
       <input
