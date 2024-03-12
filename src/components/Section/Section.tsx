@@ -58,30 +58,32 @@ const Section: React.FC<SectionProps> = ({ title, sectionName, data = [] }) => {
               <h3 className={styles.monthTitle}>{monthYear}</h3>
             </summary>
             <ul className={styles.monthList}>
-              {sortedAndGroupedData[monthYear].map((movement, index) => (
-                <li key={index} className={styles.item}>
-                  <div className={styles.icon}>
-                    <IncomeIcon />
-                  </div>
-                  <div className={styles.content}>
-                    <span className={styles.dateText}>
-                      {format(
-                        new Date(movement.date),
-                        "EEEE dd 'de' MMMM, yyyy",
-                        {
-                          locale: es,
-                        }
-                      )}
-                    </span>
-                    <span className={styles.valueText}>
-                      {formatter.format(movement.value)}
-                    </span>
-                  </div>
-                </li>
-              ))}
+              {sortedAndGroupedData[monthYear]
+                .map((movement, index) => (
+                  <li key={index} className={styles.item}>
+                    <div className={styles.icon}>
+                      <IncomeIcon />
+                    </div>
+                    <div className={styles.content}>
+                      <span className={styles.dateText}>
+                        {format(
+                          new Date(movement.date),
+                          "EEEE dd 'de' MMMM, yyyy",
+                          {
+                            locale: es,
+                          }
+                        )}
+                      </span>
+                      <span className={styles.valueText}>
+                        {formatter.format(movement.value)}
+                      </span>
+                    </div>
+                  </li>
+                ))
+                .reverse()}
             </ul>
           </details>
-        ))}
+        )).reverse()}
         {data.length === 0 && <p>No hay datos para mostrar</p>}
       </ul>
     </section>
