@@ -6,12 +6,32 @@ export const formatter = new Intl.NumberFormat("co-CO", {
 });
 
 export function convertToMovement(jsonString: string): Movement[] {
-  const tempArray = JSON.parse(jsonString) as { date: string; value: number }[];
+  const tempArray = JSON.parse(jsonString) as {
+    date: string;
+    value: number;
+    type: string;
+    description?: string;
+  }[];
 
-  const movements = tempArray.map((tempObj) => ({
-    date: new Date(tempObj.date),
-    value: tempObj.value,
-  }));
+  const movements = tempArray.map(
+    ({ date, value, type, description = "No description" }) => ({
+      date: new Date(date),
+      value: value,
+      type: type,
+      description: description,
+    })
+  );
 
   return movements;
 }
+
+export const mapTabToName = (tabName: string): string => {
+  switch (tabName) {
+    case "Ingresos":
+      return "income";
+    case "Gastos":
+      return "expense";
+    default:
+      return tabName.toLowerCase(); // O manejar de otra forma si es necesario
+  }
+};

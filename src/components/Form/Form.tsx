@@ -22,6 +22,8 @@ const Form: React.FC<FormProps> = () => {
     const formData = new FormData(form);
     const date = formData.get("date") as string;
     const value = formData.get("value") as string;
+    const type = formData.get("type") as string;
+    const description = formData.get("description") as string;
     const inputDate = new Date(date);
     const fixedDate = new Date(
       inputDate.getTime() + inputDate.getTimezoneOffset() * 60000
@@ -30,9 +32,11 @@ const Form: React.FC<FormProps> = () => {
     const movement: Movement = {
       date: fixedDate,
       value: Number(value),
+      type: type,
+      description: description
     };
 
-    addMovement("ingresos", movement);
+    addMovement(type, movement);
     form.reset();
     setActualDate(format(new Date(), "yyyy-MM-dd"));
   };
@@ -58,6 +62,25 @@ const Form: React.FC<FormProps> = () => {
           required
           placeholder="$20.000"
           defaultValue="20000"
+        />
+        <div className={styles.selectWrapper}>
+          <label>
+            Seleccionar tipo
+            <select className={styles.select} name="type">
+              <option value="income">Ingreso</option>
+              <option value="expense">Gasto</option>
+            </select>
+          </label>
+        </div>
+        <Input
+          id="description"
+          text="Descripción"
+          type="text"
+          name="description"
+          fullwidth
+          required
+          placeholder="Compra en la droguería"
+          defaultValue="Restaurante"
         />
       </div>
       <Button

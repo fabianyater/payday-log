@@ -7,7 +7,6 @@ type TabContextType = {
   workedDays: string;
   handleTabClick: (tabName: string) => void;
   addMovement: (type: string, movement: Movement) => void;
-  withdraw: () => void;
   getMovements: (type: string) => Movement[];
   updateData: (type: string, data: Movement[]) => void;
 };
@@ -26,23 +25,23 @@ export const TabProvider: React.FC<TabProviderProps> = ({ children }) => {
   });
   const [workedDays, setWorkedDays] = useState<string>("0");
   const [incomes, setIncomes] = useState<Movement[]>(() => {
-    const savedIncomes = localStorage.getItem("ingresos");
+    const savedIncomes = localStorage.getItem("income");
     return savedIncomes ? JSON.parse(savedIncomes) : [];
   });
-  const [withdrawals, setWithdrawals] = useState<Movement[]>(() => {
-    const savedwithdrawals = localStorage.getItem("retiros");
-    return savedwithdrawals ? JSON.parse(savedwithdrawals) : [];
+  const [expenses, setexpenses] = useState<Movement[]>(() => {
+    const savedexpenses = localStorage.getItem("expense");
+    return savedexpenses ? JSON.parse(savedexpenses) : [];
   });
 
   useEffect(() => {
-    localStorage.setItem("ingresos", JSON.stringify(incomes));
-    localStorage.setItem("total", total.toString())
+    localStorage.setItem("income", JSON.stringify(incomes));
+    localStorage.setItem("total", total.toString());
     setWorkedDays(incomes.length.toString());
   }, [incomes, total]);
 
   useEffect(() => {
-    localStorage.setItem("retiros", JSON.stringify(withdrawals));
-  }, [withdrawals]);
+    localStorage.setItem("expense", JSON.stringify(expenses));
+  }, [expenses]);
 
   useEffect(() => {
     const storedTab = localStorage.getItem("activeTab");
@@ -54,7 +53,7 @@ export const TabProvider: React.FC<TabProviderProps> = ({ children }) => {
 
   useEffect(() => {
     const getTotal = localStorage.getItem("total") || 0;
-    setTotal(Number(getTotal))
+    setTotal(Number(getTotal));
   }, []);
 
   const handleTabClick = (tabName: string) => {
@@ -64,40 +63,36 @@ export const TabProvider: React.FC<TabProviderProps> = ({ children }) => {
 
   const addMovement = (type: string, movement: Movement) => {
     const movements = getMovements(type);
-    const updatedMovements = [...movements, movement];
-    setTotal(total + movement.value);
-    localStorage.setItem(type, JSON.stringify(updatedMovements));
-    setIncomes([...incomes, movement]);
-  };
 
-  const updateData = (type: string, data: Movement[]) => {
-    if (type === "ingresos") {
-      setTotal(data.reduce((total, income) => total + income.value, 0));
-      setIncomes(data);
-    } else if (type === "retiros") {
-      setTotal(
-        total - data.reduce((total, withdraw) => total + withdraw.value, 0)
-      );
-      setWithdrawals(data);
+    if (type === "income") {
+      const updatedMovements = [...movements, movement];
+      setTotal(total + movement.value);
+      localStorage.setItem(type, JSON.stringify(updatedMovements));
+      setIncomes([...incomes, movement]);
+    }
+
+    if (type === "expense") {
+      setTotal(total - movement.value);
+      const updatedMovements = [...movements, movement];
+      localStorage.setItem(type, JSON.stringify(updatedMovements));
+      setexpenses([...expenses, movement]);
     }
   };
 
-  const withdraw = () => {
-    const movements = getMovements("retiros");
-    const withdrawValue = total;
-    const newWithdraw: Movement = {
-      date: new Date(),
-      value: withdrawValue,
-    };
-    setTotal(total - withdrawValue);
-
-    const updatedMovements = [...movements, newWithdraw];
-    localStorage.setItem("retiros", JSON.stringify(updatedMovements));
-    setWithdrawals([...withdrawals, newWithdraw]);
+  const updateData = (type: string, data: Movement[]) => {
+    if (type === "income") {
+      setTotal(data.reduce((total, income) => total + income.value, 0));
+      setIncomes(data);
+    } else if (type === "expense") {
+      setTotal(
+        total - data.reduce((total, withdraw) => total + withdraw.value, 0)
+      );
+      setexpenses(data);
+    }
   };
 
   const getMovements = (type: string): Movement[] => {
-    const movements = type === "ingresos" ? incomes : withdrawals;
+    const movements = type === "income" ? incomes : expenses;
     return movements ? movements : [];
   };
 
@@ -109,7 +104,6 @@ export const TabProvider: React.FC<TabProviderProps> = ({ children }) => {
         workedDays,
         handleTabClick,
         addMovement,
-        withdraw,
         getMovements,
         updateData,
       }}

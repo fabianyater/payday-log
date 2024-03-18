@@ -19,10 +19,10 @@ const Tabs: React.FC<TabsProps> = () => {
         onClick={() => handleTabClick("Ingresos")}
       />
       <Button
-        text="Retiros"
+        text="Gastos"
         size="sm"
-        isActive={activeTab === "Retiros"}
-        onClick={() => handleTabClick("Retiros")}
+        isActive={activeTab === "Gastos"}
+        onClick={() => handleTabClick("Gastos")}
       />
     </section>
   );

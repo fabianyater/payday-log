@@ -26,13 +26,13 @@ function App() {
           <Section
             sectionName="Ingresos"
             title="Listado de Ingresos"
-            data={getMovements("ingresos")}
+            data={getMovements("income")}
           />
         ) : (
           <Section
-            title="Retiros"
-            data={getMovements("retiros")}
-            sectionName="Retiros"
+            title="Gastos"
+            data={getMovements("expense")}
+            sectionName="Gastos"
           />
         )}
       </main>

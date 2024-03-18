@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { useTabContext } from "../../hooks/useTab";
-import { convertToMovement } from "../../utils";
+import { convertToMovement, mapTabToName } from "../../utils";
 import { ImportIcon } from "../SvgIcon/SvgIcon";
 import styles from "./UploadFileInput.module.css";
 
@@ -30,7 +30,7 @@ const UploadFileInput: React.FC<UploadFileInputProps> = ({ tab }) => {
             const fileReader = new FileReader();
             fileReader.onload = (event) => {
               const text = event.target?.result as string;
-              updateData(tab.toLowerCase(), convertToMovement(text));
+              updateData(mapTabToName(tab), convertToMovement(text));
             };
             fileReader.readAsText(e.target.files[0]);
           }
