@@ -1,5 +1,6 @@
 import React, { ReactNode, createContext, useEffect, useState } from "react";
 import { Movement } from "../types";
+import { generateRandomId } from "../utils";
 
 type TabContextType = {
   activeTab: string;
@@ -65,6 +66,7 @@ export const TabProvider: React.FC<TabProviderProps> = ({ children }) => {
     const movements = getMovements(type);
 
     if (type === "income") {
+      movement.id = generateRandomId();
       const updatedMovements = [...movements, movement];
       setTotal(total + movement.value);
       localStorage.setItem(type, JSON.stringify(updatedMovements));
@@ -80,14 +82,20 @@ export const TabProvider: React.FC<TabProviderProps> = ({ children }) => {
   };
 
   const updateData = (type: string, data: Movement[]) => {
+    const dataWithIds = data.map((movement) => ({
+      ...movement,
+      id: movement.id || generateRandomId(), // Asigna un ID solo si no existe
+    }));
+
     if (type === "income") {
-      setTotal(data.reduce((total, income) => total + income.value, 0));
-      setIncomes(data);
+      setTotal(dataWithIds.reduce((total, income) => total + income.value, 0));
+      setIncomes(dataWithIds);
     } else if (type === "expense") {
       setTotal(
-        total - data.reduce((total, withdraw) => total + withdraw.value, 0)
+        total -
+          dataWithIds.reduce((total, withdraw) => total + withdraw.value, 0)
       );
-      setexpenses(data);
+      setexpenses(dataWithIds);
     }
   };
 

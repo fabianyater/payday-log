@@ -7,6 +7,7 @@ export const formatter = new Intl.NumberFormat("co-CO", {
 
 export function convertToMovement(jsonString: string): Movement[] {
   const tempArray = JSON.parse(jsonString) as {
+    id: string;
     date: string;
     value: number;
     type: string;
@@ -14,7 +15,8 @@ export function convertToMovement(jsonString: string): Movement[] {
   }[];
 
   const movements = tempArray.map(
-    ({ date, value, type, description = "No description" }) => ({
+    ({ id, date, value, type, description = "No description" }) => ({
+      id: id,
       date: new Date(date),
       value: value,
       type: type,
@@ -34,4 +36,8 @@ export const mapTabToName = (tabName: string): string => {
     default:
       return tabName.toLowerCase(); // O manejar de otra forma si es necesario
   }
+};
+
+export const generateRandomId = (): string => {
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 };
