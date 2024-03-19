@@ -5,6 +5,7 @@ import { Movement } from "../../types";
 import { Button } from "../Button";
 import { Input } from "../Input";
 import styles from "./Form.module.css";
+import { generateRandomId } from "../../utils";
 
 export type FormProps = {
   // types...
@@ -30,6 +31,7 @@ const Form: React.FC<FormProps> = () => {
     );
 
     const movement: Movement = {
+      id: generateRandomId(),
       date: fixedDate,
       value: Number(value),
       type: type,
