@@ -10,6 +10,13 @@
     flex-direction: column;
     gap: 15px;
 
+    .group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
     .selectWrapper {
       box-sizing: border-box;
       display: flex;

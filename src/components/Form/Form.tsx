@@ -35,7 +35,7 @@ const Form: React.FC<FormProps> = () => {
       date: fixedDate,
       value: Number(value),
       type: type,
-      description: description
+      description: description,
     };
 
     addMovement(type, movement);
@@ -45,26 +45,28 @@ const Form: React.FC<FormProps> = () => {
   return (
     <form onSubmit={onSubmit} className={styles.form}>
       <div className={styles.inputGroup}>
-        <Input
-          id="date"
-          text="Fecha"
-          name="date"
-          type="date"
-          fullwidth
-          required
-          value={ActualDate}
-          onChange={(e) => setActualDate(e.target.value)}
-        />
-        <Input
-          id="value"
-          text="Monto"
-          type="number"
-          name="value"
-          fullwidth
-          required
-          placeholder="$20.000"
-          defaultValue="20000"
-        />
+        <div className={styles.group}>
+          <Input
+            id="date"
+            text="Fecha"
+            name="date"
+            type="date"
+            fullwidth
+            required
+            value={ActualDate}
+            onChange={(e) => setActualDate(e.target.value)}
+          />
+          <Input
+            id="value"
+            text="Monto"
+            type="number"
+            name="value"
+            fullwidth
+            required
+            placeholder="$20.000"
+            defaultValue="20000"
+          />
+        </div>
         <div className={styles.selectWrapper}>
           <label>
             Seleccionar tipo
