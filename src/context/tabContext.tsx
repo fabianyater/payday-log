@@ -37,7 +37,10 @@ export const TabProvider: React.FC<TabProviderProps> = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("income", JSON.stringify(incomes));
     localStorage.setItem("total", total.toString());
-    setWorkedDays(incomes.length.toString());
+    const totalWorkedDays = incomes.filter(
+      (i) => i.description === "Restaurante"
+    ).length;
+    setWorkedDays(totalWorkedDays.toString());
   }, [incomes, total]);
 
   useEffect(() => {
