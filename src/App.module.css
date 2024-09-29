@@ -3,8 +3,15 @@
   width: 100%;
   text-align: left;
   margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
 
   .header {
+    position: sticky;
+    top: 0;
+    height: max-content;
+    
     .title {
       font-family: "Plus Jakarta Sans", sans-serif;
       font-optical-sizing: auto;

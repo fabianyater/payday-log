@@ -7,7 +7,14 @@ import { useTabContext } from "./hooks/useTab";
 import { formatter } from "./utils";
 
 function App() {
-  const { activeTab, total, totalIncome, totalExpense, workedDays, getMovements } = useTabContext();
+  const {
+    activeTab,
+    total,
+    totalIncome,
+    totalExpense,
+    workedDays,
+    getMovements,
+  } = useTabContext();
 
   return (
     <div className={styles.container}>
@@ -17,12 +24,11 @@ function App() {
         <Text text="Gastos: " value={formatter.format(totalExpense)} />
         <Text text="Total: " value={formatter.format(total)} />
         <Text text="Total días trabajados: " value={workedDays} />
-      </header>
-      <main>
         <section className={styles.formSection}>
           <Form />
         </section>
-
+      </header>
+      <main>
         <Tabs />
         {activeTab === "Ingresos" ? (
           <Section
