@@ -5,6 +5,8 @@ import { generateRandomId } from "../utils";
 type TabContextType = {
   activeTab: string;
   total: number;
+  totalIncome: number;
+  totalExpense: number;
   workedDays: string;
   handleTabClick: (tabName: string) => void;
   addMovement: (type: string, movement: Movement) => void;
@@ -33,6 +35,16 @@ export const TabProvider: React.FC<TabProviderProps> = ({ children }) => {
     const savedexpenses = localStorage.getItem("expense");
     return savedexpenses ? JSON.parse(savedexpenses) : [];
   });
+  const [totalIncome, setTotalIncome] = useState<number>(() => {
+    const savedIncomeTotal = localStorage.getItem("totalIncome");
+    return savedIncomeTotal ? JSON.parse(savedIncomeTotal) : 0;
+  });
+  
+  const [totalExpense, setTotalExpense] = useState<number>(() => {
+    const savedExpenseTotal = localStorage.getItem("totalExpense");
+    return savedExpenseTotal ? JSON.parse(savedExpenseTotal) : 0;
+  });
+  
 
   useEffect(() => {
     localStorage.setItem("income", JSON.stringify(incomes));
@@ -60,6 +72,19 @@ export const TabProvider: React.FC<TabProviderProps> = ({ children }) => {
     setTotal(Number(getTotal));
   }, []);
 
+  useEffect(() => {
+    // Calcular el total de ingresos y gastos al cargar desde localStorage
+    const totalIncomeCalculated = incomes.reduce((acc, movement) => acc + movement.value, 0);
+    const totalExpenseCalculated = expenses.reduce((acc, movement) => acc + movement.value, 0);
+  
+    setTotalIncome(totalIncomeCalculated);
+    setTotalExpense(totalExpenseCalculated);
+  
+    localStorage.setItem("totalIncome", totalIncomeCalculated.toString());
+    localStorage.setItem("totalExpense", totalExpenseCalculated.toString());
+  }, [incomes, expenses]);
+  
+
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName);
     localStorage.setItem("activeTab", tabName);
@@ -72,14 +97,18 @@ export const TabProvider: React.FC<TabProviderProps> = ({ children }) => {
       movement.id = generateRandomId();
       const updatedMovements = [...movements, movement];
       setTotal(total + movement.value);
+      setTotalIncome(totalIncome + movement.value);
       localStorage.setItem(type, JSON.stringify(updatedMovements));
+      localStorage.setItem("totalIncome", (totalIncome + movement.value).toString());
       setIncomes([...incomes, movement]);
     }
 
     if (type === "expense") {
       setTotal(total - movement.value);
+      setTotalExpense(totalExpense + movement.value)
       const updatedMovements = [...movements, movement];
       localStorage.setItem(type, JSON.stringify(updatedMovements));
+      localStorage.setItem("totalExpense", (totalExpense + movement.value).toString());
       setexpenses([...expenses, movement]);
     }
   };
@@ -117,6 +146,8 @@ export const TabProvider: React.FC<TabProviderProps> = ({ children }) => {
         addMovement,
         getMovements,
         updateData,
+        totalIncome,
+        totalExpense
       }}
     >
       {children}
