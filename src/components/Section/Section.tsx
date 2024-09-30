@@ -21,6 +21,9 @@ const Section: React.FC<SectionProps> = ({ title, sectionName, data = [] }) => {
       });
       acc[monthYearKey] = acc[monthYearKey] || [];
       acc[monthYearKey].push(item);
+
+      acc[monthYearKey].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
       return acc;
     },
     {}
