@@ -22,6 +22,11 @@
       font-style: normal;
     }
   }
+
+  main {
+    width: 50%;
+    margin-bottom: 100px;
+  }
 }
 
 @media (max-width: 850px) {
@@ -32,6 +37,10 @@
 
     .header {
       position: relative;
+    }
+
+    main {
+      width: 100%;
     }
   }
 }
